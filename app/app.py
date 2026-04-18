@@ -10,6 +10,9 @@ import pickle
 model = pickle.load(open("models/model.pkl", "rb"))
 scaler = pickle.load(open("models/scaler.pkl", "rb"))
 
+with open("models/columns.pkl", "rb") as f:
+    model_columns = pickle.load(f)
+
 
 # App Title
 
@@ -120,6 +123,8 @@ if st.button("Predict"):
         }
 
     input_df = pd.DataFrame([input_dict])
+
+    input_df = input_df[model_columns]
 
     # Scaling
     input_scaled = scaler.transform(input_df)
